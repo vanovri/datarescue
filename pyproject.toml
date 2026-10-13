@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datarescue-local"
+version = "0.1.0"
+description = "Inspect, repair and quarantine flat CSV/JSON data with an explicit schema and a complete audit."
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["fastapi==0.143.0", "uvicorn==0.54.0", "python-multipart==0.0.32"]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1", "httpx==0.28.1"]
+browser = ["playwright==1.63.0"]
+
+[project.scripts]
+datarescue = "datarescue.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["datarescue*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

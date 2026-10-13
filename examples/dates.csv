@@ -1,0 +1,6 @@
+id,date,label
+001,02/03/2026,Ambiguous day and month
+002,13/03/2026,Only DMY is valid
+003,2026-10-13,ISO date
+004,31/02/2026,Impossible calendar date
+005,12/12/2026,Both interpretations agree

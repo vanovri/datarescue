@@ -1,0 +1,1 @@
+{"columns":{"id":{"type":"string","required":true},"date":{"type":"date","required":true,"date_format":"auto"},"label":{"type":"string"}},"key":["id"]}

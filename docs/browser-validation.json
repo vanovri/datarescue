@@ -1,0 +1,19 @@
+{
+  "url": "http://127.0.0.1:8763",
+  "channel": "msedge",
+  "checks_passed": 11,
+  "checks": [
+    "initial local connection and empty state",
+    "order example, exact values, identifier preservation and row audit",
+    "quarantine filter and original/proposed views",
+    "downloaded ZIP: all 12 records accounted for and formula escape audited",
+    "JSON decimal beyond safe binary-float precision",
+    "ambiguous dates require a decision; changed rules block stale export",
+    "390px mobile containment and readable stacked layout",
+    "explicit header mapping and original-header provenance",
+    "bounded 25-row pagination",
+    "readable malformed-input rejection",
+    "no browser runtime errors"
+  ],
+  "browser_errors": []
+}

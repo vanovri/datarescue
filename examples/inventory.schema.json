@@ -1,0 +1,1 @@
+{"columns":{"sku":{"type":"string","required":true},"name":{"type":"string","required":true},"price":{"type":"number"},"stock":{"type":"integer","required":true},"active":{"type":"boolean","required":true}},"key":["sku"]}

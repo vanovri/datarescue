@@ -130,4 +130,3 @@ Contributions should reproduce a concrete failure, preserve source values, and a
 ## Bahasa Indonesia
 
 DataRescue memeriksa CSV/JSON di komputer Kamu. Pilih aturan kolom, tinjau perubahan, lalu ekspor ZIP. Nomor ID tetap menyimpan nol di depan. Baris yang gagal validasi masuk karantina beserta alasannya. File asli tetap utuh. Jalankan `run.ps1` untuk membuka aplikasi lokal.
-

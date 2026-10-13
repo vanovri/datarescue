@@ -1,0 +1,10 @@
+{
+  "columns": {
+    "order_id": {"type": "string", "required": true},
+    "customer": {"type": "string", "required": true},
+    "amount": {"type": "number", "required": true},
+    "ordered_at": {"type": "date", "required": true, "date_format": "dmy"},
+    "paid": {"type": "boolean", "required": true}
+  },
+  "key": ["order_id"]
+}

@@ -1,0 +1,8 @@
+[
+  {"sku": "00001", "name": "  Cable tie  ", "price": 1250.50, "stock": 30, "active": true},
+  {"sku": "00002", "name": "Notebook", "price": 18999.99, "stock": 12, "active": true},
+  {"sku": "00003", "name": "Binder", "price": null, "stock": 0, "active": false},
+  {"sku": "00002", "name": "Duplicate", "price": 19000, "stock": 2, "active": true},
+  {"sku": "00004", "name": "Pen", "price": 2500, "stock": "unknown", "active": true},
+  {"sku": "00005", "name": "Index card", "price": 9007199254740993.25, "stock": 3, "active": true}
+]
