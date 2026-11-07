@@ -8,6 +8,7 @@ import httpx
 from datarescue.api import app
 from datarescue.cli import main
 
+
 class Client:
     def request(self, method, url, **kwargs):
         async def send():
