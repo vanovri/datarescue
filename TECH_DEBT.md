@@ -10,22 +10,40 @@ Reviewed on 2026-11-07 against the current working tree on disk. All line number
 ```diff
 --- a/datarescue/core.py
 +++ b/datarescue/core.py
-@@ -489,9 +489,13 @@
+@@ -489,9 +489,9 @@
      }
  
  
 -def _compute_plan_id(source_sha256: str, schema: Schema, options: Options) -> str:
-+def _compute_plan_id(
-+    source_sha256: str,
-+    schema_dict: dict[str, Any],
-+    options_dict: dict[str, Any],
-+) -> str:
++def _compute_plan_id(source_sha256: str, schema_dict: dict[str, Any], options_dict: dict[str, Any]) -> str:
      canonical_plan = json.dumps(
 -        {"source": source_sha256, "schema": schema.model_dump(), "options": options.model_dump()},
 +        {"source": source_sha256, "schema": schema_dict, "options": options_dict},
          sort_keys=True,
      )
      return hashlib.sha256(canonical_plan.encode("utf-8")).hexdigest()
+@@ -522,7 +522,9 @@
+         for row_number, original in enumerate(originals, 1)
+     ]
+     digest = hashlib.sha256(data).hexdigest()
+-    plan_id = _compute_plan_id(digest, active_schema, active_options)
++    schema_dump = active_schema.model_dump()
++    options_dump = active_options.model_dump()
++    plan_id = _compute_plan_id(digest, schema_dump, options_dump)
+     safe_basename = filename.replace("\\", "/").split("/")[-1]
+     return {
+         "filename": safe_basename,
+@@ -534,8 +536,8 @@
+         "columns": columns,
+         "source_columns": source_columns,
+         "header_changes": header_changes,
+-        "schema": active_schema.model_dump(),
+-        "options": active_options.model_dump(),
++        "schema": schema_dump,
++        "options": options_dump,
+         "drift": drift,
+         "records": records,
+         "summary": _summarize_records(records),
 ```
 
 - **Validation**: Compute `schema_dump = active_schema.model_dump()` and `options_dump = active_options.model_dump()` once in `scan()`, pass both into `_compute_plan_id`, and run `.\.venv\Scripts\python.exe -m pytest -q`.
@@ -38,11 +56,19 @@ Reviewed on 2026-11-07 against the current working tree on disk. All line number
 ```diff
 --- a/datarescue/api.py
 +++ b/datarescue/api.py
-@@ -147,18 +147,21 @@
+@@ -3,6 +3,7 @@
+ from __future__ import annotations
+ 
+ import asyncio
++from functools import lru_cache
+ import json
+ import logging
+ from collections.abc import Awaitable, Callable, MutableMapping
+@@ -147,18 +148,21 @@
      ]
  
  
-+@functools.lru_cache(maxsize=len(ALLOWED_EXAMPLES))
++@lru_cache(maxsize=len(ALLOWED_EXAMPLES))
 +def _read_bundled_example(example_id: str, filename: str) -> tuple[str, str]:
 +    data_path = ROOT / "examples" / filename
 +    schema_path = ROOT / "examples" / f"{example_id}.schema.json"
@@ -68,4 +94,4 @@ Reviewed on 2026-11-07 against the current working tree on disk. All line number
          raise HTTPException(500, "Bundled example could not be loaded.") from exc
 ```
 
-- **Validation**: Import `functools`, verify mutated response dicts cannot pollute the cache (`json.loads(raw_schema)` creates a fresh dict), and run `.\.venv\Scripts\python.exe -m pytest -q`.
+- **Validation**: Clear `_read_bundled_example.cache_clear()` after editing bundled assets in a long-running development process; verify mutated response dicts cannot pollute the cache (`json.loads(raw_schema)` creates a fresh dict), and run `.\.venv\Scripts\python.exe -m pytest -q`.
