@@ -1,6 +1,8 @@
 # Technical Debt & Performance Ledger: datarescue
 
-Reviewed on 2026-11-07 against the current working tree on disk. All line numbers are 1-based and verified directly against the current production files. Every diff below is a non-destructive engineering proposal, not an applied production edit.
+Crosschecked 2026-11-08 WIB. All code diffs below are proposal-only and have not changed production source. Source references and removed patch lines were checked against this working tree. Runtime speedups remain unmeasured unless evidence is explicitly cited.
+
+Reviewed on 2026-11-08 WIB against the current working tree on disk. All line numbers are 1-based and verified directly against the current production files. Every diff below is a non-destructive engineering proposal, not an applied production edit.
 
 ## TD-01 — Serialize `active_schema.model_dump()` and `active_options.model_dump()` once per `scan()`
 
@@ -8,6 +10,7 @@ Reviewed on 2026-11-07 against the current working tree on disk. All line number
 - **Analysis**: `scan()` calls `_compute_plan_id(digest, active_schema, active_options)` (which runs `schema.model_dump()` and `options.model_dump()`) and immediately calls `active_schema.model_dump()` and `active_options.model_dump()` a second time at `core.py:537-538` when building the returned `ScanResult`.
 
 ```diff
+diff --git a/datarescue/core.py b/datarescue/core.py
 --- a/datarescue/core.py
 +++ b/datarescue/core.py
 @@ -489,9 +489,9 @@
@@ -54,6 +57,7 @@ Reviewed on 2026-11-07 against the current working tree on disk. All line number
 - **Analysis**: Bundled example files (`orders.csv`, `inventory.json`, `dates.csv` and their schemas) are static package assets, yet every `GET /api/examples/{example_id}` performs two synchronous filesystem opens/reads.
 
 ```diff
+diff --git a/datarescue/api.py b/datarescue/api.py
 --- a/datarescue/api.py
 +++ b/datarescue/api.py
 @@ -3,6 +3,7 @@

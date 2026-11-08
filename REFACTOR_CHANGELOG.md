@@ -4,7 +4,7 @@
 
 | Property | Value |
 | --- | --- |
-| **Repository** | `C:\Users\ardhy\Projects\datarescue` (`datarescue-local` v0.1.0) |
+| **Repository** | `.` (`datarescue-local` v0.1.0) |
 | **Original Branch** | `main` (base commit `98a037c`) |
 | **Target Branch** | `codex/auto-refactor-and-tests` |
 | **Pre-Refactor Backup Stash** | `stash@{0}: On main: pre-refactor-backup-snapshot` (preserves untracked docs & artifacts untouched) |

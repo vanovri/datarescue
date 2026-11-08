@@ -1,6 +1,8 @@
 # Architecture: datarescue
 
-Reviewed on 2026-11-07 against the local working tree (`C:/Users/ardhy/Projects/datarescue`). `graphify-out/graph.json` provides the local AST symbol graph.
+Crosscheck: 2026-11-08 WIB. The repository-local offline checks completed with exit code 0 in an interpreter/environment containing the declared dependencies. Hardware, live providers, deployment and unexecuted CI platforms are separate evidence boundaries.
+
+Reviewed on 2026-11-07 against the local working tree (`.`). `graphify-out/graph.json` provides the local AST symbol graph.
 
 ## 1. System Context & Data Flow
 
@@ -57,8 +59,7 @@ Stateless backend with zero persistent upload storage. Original row dictionaries
 ## 5. Verification Commands
 
 ```powershell
-Set-Location 'C:\Users\ardhy\Projects\datarescue'
-& '.\.venv\Scripts\python.exe' -m pytest -q
+Set-Location 'python' -m pytest -q
 ```
 
 ## 6. Integration Boundaries
